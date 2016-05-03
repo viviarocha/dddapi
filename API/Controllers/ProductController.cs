@@ -11,39 +11,62 @@ namespace API.Controllers
     public class ProductController : ApiController
     {
 
-        List<Product> listadeProdutos = new List<Product>();
+         static List<Product> listadeProdutos = new List<Product>();
 
-
-        // GET: api/Product
-        public IHttpActionResult Get()
+        public ProductController()
         {
-            var produto1 = new Product();
-            produto1.Id = 1;
-            produto1.Name = "Placa de Rede";
-            produto1.Category = "Hadware";
-            produto1.price = 120m;
+            var produto1 = new Product
+            {
+                Id = 1,
+                Name = "Placa de Rede",
+                Category = "Hadware",
+                price = 120m,
+            };
 
-            var produto2 = new Product { Id = 2, Name = "Placa Mãe", Category = "Hadware", price = 480m };
-            var produto3 = new Product { Id = 3, Name = "Antivirus", Category = "Software", price = 80m };
+            var produto2 = new Product 
+            { 
+                Id = 2,
+                Name = "Placa Mãe", 
+                Category = "Hadware", 
+                price = 480m 
+            };
+            var produto3 = new Product 
+            { 
+                Id = 3, 
+                Name = "Antivirus", 
+                Category = "Software", 
+                price = 80m 
+            };
 
             listadeProdutos.Add(produto1);
             listadeProdutos.Add(produto2);
             listadeProdutos.Add(produto3);
 
+        }
 
+
+        // GET: api/Product
+        public IHttpActionResult Get()
+        {
+           
             return Ok(listadeProdutos) ;
                
         }
 
         // GET: api/Product/5
-        public string Get(int id)
+       public IHttpActionResult Get(int id)
         {
-            return "value";
+
+            var produto = listadeProdutos.Find(x => x.Id == id);
+            return Ok(produto);
         }
 
         // POST: api/Product
-        public void Post([FromBody]string value)
+        public IHttpActionResult Post([FromBody]Product produto)
         {
+            listadeProdutos.Add(produto);
+            return Ok();
+
         }
 
         // PUT: api/Product/5
